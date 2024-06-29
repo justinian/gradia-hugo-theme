@@ -11,7 +11,7 @@ fi
 
 mkdir -p out/packs/
 
-python3 ./id_replacer.py public/fvtt
+python3 ./themes/gradia/id_replacer.py public/fvtt
 sed "s/__version__/${VERSION}/g" assets/fvtt/module.json > out/module.json
 cp -r assets/fvtt/ui out/ui
 cp -r public/maps out/maps
