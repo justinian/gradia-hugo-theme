@@ -1,0 +1,18 @@
+{{ define "main" }}
+
+  <header>
+    <h1>Index</h1>
+  </header>
+
+  <ul class="index">
+    {{ $lastletter := "" }}
+    {{ range .Pages.ByLinkTitle }}
+      {{ if ne $lastletter (first 1 .LinkTitle) }}
+        {{ $lastletter = (first 1 .LinkTitle) }}
+        <li><h1>{{ $lastletter }}</h1></li>
+      {{ end }}
+      <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+    {{ end }}
+  </table>
+
+{{ end }}

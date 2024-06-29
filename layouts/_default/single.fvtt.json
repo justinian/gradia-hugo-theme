@@ -1,0 +1,53 @@
+{
+  "name": "{{ htmlUnescape .LinkTitle | safeHTML }}",
+  "_id": "__linktitlehash__({{ .LinkTitle }})",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "{{ htmlUnescape .Title | safeHTML }}",
+      "type": "text",
+      "_id": "__linktitlehash__({{ .LinkTitle }}_1)",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "{{ replaceRE `\n` `` .Content | safeHTML }}"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "11.315",
+        "createdTime": {{ .PublishDate.Unix }},
+        "modifiedTime": {{ .Lastmod.Unix }}
+      },
+      "_key": "!journal.pages!__linktitlehash__({{ .LinkTitle }}).__linktitlehash__({{ .LinkTitle }}_1)"
+    }
+  ],
+  {{- $tag := index (.Page.GetTerms "tags") 0 }}
+  {{- with $tag }}
+  "folder": "__linktitlehash__({{ $tag.LinkTitle }})",
+  {{- else }}
+  "folder": "__linktitlehash__(other)",
+  {{- end }}
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "11.315",
+    "createdTime": {{ .PublishDate.Unix }},
+    "modifiedTime": {{ .Lastmod.Unix }}
+  },
+  "_key": "!journal!__linktitlehash__({{ .LinkTitle }})"
+}

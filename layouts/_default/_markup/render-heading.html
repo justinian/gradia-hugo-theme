@@ -1,0 +1,9 @@
+{{ $anchor := safeURL .Anchor }}
+{{ $top := eq .Level 1 }}
+
+<h{{ add .Level 1 }} id='{{ $anchor }}'>
+  <a href='{{ .Page.RelPermalink }}#{{ $anchor }}'>{{ safeHTML .Text }}</a>
+</h{{ add .Level 1 }}>
+{{ if $top }}
+<hr class='heading-underline'>
+{{ end }}

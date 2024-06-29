@@ -1,0 +1,15 @@
+{{ define "data" -}}
+[
+{{ range .Site.RegularPages -}}
+{{ $page := . -}}
+{{ with .Params.mapMarkers -}}
+    {{- range . }}
+    {"group": "{{ index . "group" }}", "name": "{{ $page.LinkTitle }}", "pos": [{{ index . "pos" }}]
+        {{- with (index . "label") }}, "label": "{{ replace . "\n" "\\n" }}" {{- end -}}
+    },
+    {{- end -}}
+{{- end -}}
+{{- end }}
+    null
+]
+{{ end -}}

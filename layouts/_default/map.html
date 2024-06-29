@@ -1,0 +1,8 @@
+{{ define "fullmain" }}
+<div id="leaflet-map"></div>
+<script type="module">
+    import setupMap from '/js/map.js';
+    const mapdiv = document.getElementById('leaflet-map');
+    setupMap(mapdiv, undefined, 0.5);
+</script>
+{{ end }}

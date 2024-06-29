@@ -1,0 +1,62 @@
+<!-- [[[cog
+    from collections import namedtuple
+    from math import cos, degrees, pi, sin, sqrt
+    point = namedtuple("point", ["x", "y"])
+
+    debug = globals().get("debug", False)
+
+    viewbox = point(100, 100)
+
+    cog.outl(f'<svg')
+    cog.outl(f'  xmlns="http://www.w3.org/2000/svg"')
+    cog.outl(f'  viewBox="0 0 {viewbox.x} {viewbox.y}"')
+    cog.outl(f'  fill="white" stroke="black"')
+    cog.outl(f'  >')
+
+    if debug:
+        cog.outl(f'  <rect x="0" y="0" width="{viewbox.x}" height="{viewbox.y}"')
+        cog.outl(f'        fill="transparent" stroke="white" stroke-width="1"/>')
+]]]-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  fill="white" stroke="black"
+  >
+<!--[[[end]]]-->
+
+<!-- [[[cog
+    center = point(viewbox.x/2, viewbox.y/2)
+
+    arms = 7
+    near = 25
+    far = 48
+    start = pi/2
+    turn = 2*pi/arms
+
+    def polar(theta, distance):
+        return point(center.x + cos(theta) * distance, center.y + sin(theta) * distance)
+
+    def arm(theta, turn, index):
+        p1 = polar(theta - turn/2, near)
+        p2 = polar(theta, far)
+        cog.outl(f'                 {p1.x},{p1.y} {p2.x},{p2.y}')
+
+    cog.outl(f'<polygon points="')
+    for i in range(arms):
+        arm(i * turn - start, turn, i)
+    cog.outl(f'" stroke-width="3" />')
+
+    if debug:
+        cog.outl(f'  <circle cx="{center.x}" cy="{center.y}" r="1" fill="green"/>')
+]]]-->
+<polygon points="
+                 39.152906522061045,27.475778302439522 50.0,2.0
+                 60.847093477938955,27.475778302439522 87.52791115846543,20.07248951078079
+                 74.37319780454558,44.43697665109214 96.79653978472754,60.68100482990309
+                 69.54578706170075,65.58724504646834 70.82641947764279,93.24650565931611
+                 50.0,75.0 29.173580522357213,93.24650565931611
+                 30.454212938299253,65.58724504646834 3.2034602152724645,60.681004829903095
+                 25.62680219545441,44.436976651092145 12.472088841534564,20.072489510780798
+" stroke-width="3" />
+<!--[[[end]]]-->
+</svg>

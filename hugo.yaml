@@ -1,0 +1,68 @@
+baseURL: 'https://gradia.org/'
+languageCode: 'en-us'
+title: 'Gradia'
+
+menu:
+  main:
+    - name: Map
+      pageRef: /map/
+      weight: 1
+    - name: Tags
+      pageRef: /tags/
+      weight: 2
+    - name: Index
+      pageRef: /pages/
+      weight: 3
+
+disablePathToLower: true
+capitalizeListTitles: false
+copyright: "&copy; 2000-2024 Justin C. Miller"
+enableGitInfo: true
+
+params:
+  github: https://github.com/justinian/gradia.org
+
+taxonomies:
+  tag: tags
+
+markup:
+  goldmark:
+    extensions:
+      extras:
+        subscript:
+          enable: true
+        superscript:
+          enable: true
+
+frontmatter:
+  date:
+    - :git
+  title:
+    - '{{ replace .File.ContentBaseName "-" " " | title }}'
+
+mediaTypes:
+  application/json:
+    suffixes:
+    - json
+
+outputFormats:
+  fvtt:
+    mediaType: application/json
+    notAlternative: true
+    path: fvtt
+    ugly: true
+
+outputs:
+  home:
+  - html
+  - fvtt
+  page:
+  - html
+  - fvtt
+  section:
+  - html
+  taxonomy:
+  - html
+  term:
+  - fvtt
+  - html

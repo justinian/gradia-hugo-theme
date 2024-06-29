@@ -1,0 +1,25 @@
+{{ if eq (default "html" (.Get "only")) "html" }}
+<div class="mapimage">
+<div id="leaflet-map"></div>
+</div>
+<script type="module">
+    import setupMap from '/js/map.js';
+    const mapdiv = document.getElementById('leaflet-map');
+    {{ with (.Get "target") -}}
+    const target = {{ split . "," }};
+    {{ else -}}
+    const target = undefined;
+    {{ end -}}
+    {{ with (.Get "zoom") -}}
+    const zoom = {{ . }};
+    {{ else -}}
+    const zoom = 0;
+    {{ end -}}
+    {{ with (.Get "offset") -}}
+    const offset = {{ . }};
+    {{ else -}}
+    const offset = 0;
+    {{ end -}}
+    setupMap(mapdiv, target, zoom, offset);
+</script>
+{{ end }}

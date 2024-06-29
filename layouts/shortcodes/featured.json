@@ -1,0 +1,14 @@
+ <div>
+    {{ $featured := site.RegularPages.ByLength.Reverse | first 6 }}
+    {{ with $featured }}
+    <h3 style='margin-top: 3em;'>Featured Entries</h3>
+    <hr class='heading-underline'>
+    <ul class='related'>
+      {{ range . }}
+      <li><b>@UUID[Compendium.gradia-org.info.JournalEntry.__linktitlehash__({{ .LinkTitle }})]{{ "{" }}{{ .Title }}{{ "}" }}</b>
+        {{- with .Description -}}: {{ . }}{{- end -}}
+      </li>
+      {{ end }}
+    </ul>
+    {{ end }}
+  </div>

@@ -1,0 +1,14 @@
+{{ if eq (default "fvtt" (.Get "only")) "fvtt" }}
+{{ $basename := (default (.Page.LinkTitle) (.Get "alt")) | urlize }}
+{{ $path := add "/maps/" $basename ".png" }}
+{{ with resources.GetMatch $path -}}
+  {{- with .Process "webp" -}}
+    <img
+      class='mapimage'
+      src='modules/gradia-org/{{ .RelPermalink }}'
+      width='{{ .Width }}'>
+  {{- end -}}
+{{- else -}}
+  {{ errorf "Unable to get image %q" $path }}
+{{- end }}
+{{- end }}

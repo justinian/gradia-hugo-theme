@@ -1,0 +1,83 @@
+{
+  "name": "Gradia",
+  "_id": "__linktitlehash__({{ .LinkTitle }})",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "{{ .Title }}",
+      "type": "text",
+      "_id": "__linktitlehash__({{ .LinkTitle }}_1)",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "{{ replaceRE `\n` `` .Content | safeHTML }}"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "11.315",
+        "createdTime": {{ .PublishDate.Unix }},
+        "modifiedTime": {{ .Lastmod.Unix }}
+      },
+      "_key": "!journal.pages!__linktitlehash__({{ .LinkTitle }}).__linktitlehash__({{ .LinkTitle }}_1)"
+    },
+    {
+      "sort": 200000,
+      "name": "Map",
+      "type": "image",
+      "_id": "__linktitlehash__({{ .LinkTitle }}_2)",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {
+        "caption": "Map of Western Gradia"
+      },
+      "text": {
+        "format": 1
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+{{- with resources.GetMatch "/maps/Western-Gradia.png" }}
+      "src": "modules/gradia-org{{ .RelPermalink }}",
+{{- else }}
+      "src": null,
+{{- end }}
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "coreVersion": "11.315",
+        "createdTime": {{ .PublishDate.Unix }},
+        "modifiedTime": {{ .Lastmod.Unix }}
+      },
+      "_key": "!journal.pages!__linktitlehash__({{ .LinkTitle }}).__linktitlehash__({{ .LinkTitle }}_2)"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "11.315",
+    "createdTime": {{ .PublishDate.Unix }},
+    "modifiedTime": {{ .Lastmod.Unix }}
+  },
+  "_key": "!journal!__linktitlehash__({{ .LinkTitle }})"
+}

@@ -1,0 +1,7 @@
+{{ $anchor := safeURL .Anchor }}
+{{ $top := eq .Level 1 }}
+
+<h{{ add .Level 1 }}>{{ safeHTML .Text }}</h{{ add .Level 1 }}>
+{{ if $top }}
+<hr class='heading-underline'>
+{{ end }}

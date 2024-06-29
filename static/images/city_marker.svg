@@ -1,0 +1,42 @@
+<!-- [[[cog
+    from collections import namedtuple
+    from math import cos, degrees, pi, sin, sqrt
+    point = namedtuple("point", ["x", "y"])
+
+    viewbox = point(100, 100)
+
+    cog.outl(f'<svg')
+    cog.outl(f'  xmlns="http://www.w3.org/2000/svg"')
+    cog.outl(f'  viewBox="0 0 {viewbox.x} {viewbox.y}"')
+    cog.outl(f'  fill="white" stroke="black"')
+    cog.outl(f'  >')
+]]]-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  fill="white" stroke="black"
+  >
+<!--[[[end]]]-->
+
+<!-- [[[cog
+    center = point(viewbox.x/2, viewbox.y/2)
+    margin = 2
+    ringsize = 10
+    stroke = 2
+    outer = center.x - stroke - margin
+    inner = outer - stroke - (ringsize*2)
+    cog.outl(f'  <mask id="center_cut">')
+    cog.outl(f'    <rect fill="white" width="100%" height="100%" />')
+    cog.outl(f'    <circle cx="{center.x}" cy="{center.y}" r="{outer - ringsize}" fill="black" stroke="black" />')
+    cog.outl(f'  </mask>')
+    cog.outl(f'  <circle cx="{center.x}" cy="{center.y}" r="{outer}" mask="url(#center_cut)" stroke-width="{stroke}" />')
+    cog.outl(f'  <circle cx="{center.x}" cy="{center.y}" r="{inner}" stroke-width="{stroke}" />')
+]]]-->
+<mask id="center_cut">
+  <rect fill="white" width="100%" height="100%" />
+  <circle cx="50.0" cy="50.0" r="36.0" fill="black" stroke="black" />
+</mask>
+<circle cx="50.0" cy="50.0" r="46.0" mask="url(#center_cut)" stroke-width="2" />
+<circle cx="50.0" cy="50.0" r="24.0" stroke-width="2" />
+<!--[[[end]]]-->
+</svg>

@@ -1,0 +1,11 @@
+{{ define "main" }}
+
+  {{ if .Title }}
+    {{ partial "header.html" . }}
+  {{ end }}
+
+  <div>
+    {{ .Content }}
+  </div>
+
+{{ end }}

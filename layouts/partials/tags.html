@@ -1,0 +1,22 @@
+{{ $term_list := slice }}
+{{ range $term, $_ := site.Taxonomies }}
+  {{ $term_list = $term_list | append $term }}
+{{ end }}
+
+{{ $term_is_used_list := apply $term_list "isset" .Params "." }}
+
+{{ if true | in $term_is_used_list }}
+  <div class="tags-box">
+    {{ range $term := $term_list }}
+      {{ if isset $.Params $term }}
+        <ul class="tags-list">
+          {{ range $.GetTerms $term }}
+            <li>
+              <a href="{{ .RelPermalink }}" rel="tag">{{ .LinkTitle }}</a>
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+    {{ end }}
+  </div>
+{{ end }}

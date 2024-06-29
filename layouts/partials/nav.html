@@ -1,0 +1,23 @@
+<nav>
+  <div>
+    <ul>
+      <li>
+        <a href="{{ relLangURL nil }}">{{ site.Title }}</a>
+      </li>
+      {{ range site.Menus.main }}
+        {{ $url := relLangURL .URL }}
+        {{ if isset .Params "format" | and .Page }}
+          {{ $url = (.Page.OutputFormats.Get .Params.format).RelPermalink }}
+        {{ end }}
+        <li>
+          <a href="{{ $url }}">{{ .Name }}</a>
+        </li>
+      {{ end }}
+      {{ with site.Params.github }}
+        <li>
+          <a href="{{ . }}"><img class="nav-icon" src="/images/github.svg"></a>
+        </li>
+      {{ end }}
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,18 @@
+{{ if eq (default "html" (.Get "only")) "html" }}
+{{ $basename := (default (.Page.LinkTitle) (.Get "name")) | urlize }}
+{{ $path := add "/maps/" $basename ".png" }}
+{{ with resources.GetMatch $path -}}
+  {{- with .Process "webp" -}}
+  <a href='{{ .RelPermalink }}'>
+  {{- end -}}
+  {{- with .Process "resize 600x webp" -}}
+    <img
+      class='staticmap'
+      src='{{ .RelPermalink }}'
+      width='{{ .Width }}'>
+  {{- end -}}
+  </a>
+{{- else -}}
+  {{ errorf "Unable to get image %q" $path }}
+{{- end }}
+{{- end }}

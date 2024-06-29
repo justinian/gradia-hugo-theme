@@ -1,0 +1,17 @@
+{{ define "main" }}
+  {{ partial "header.html" . }}
+  {{ with .Content }}
+    {{ . }}
+    <hr class="heading-underline">
+  {{ end }}
+
+  <table class="listpage-table">
+    {{ range .Pages.ByTitle }}
+      <tr>
+        <td><a href="{{ .RelPermalink }}">{{ .Title }}</a></td>
+        <td>{{- with .Description }}{{ .}}{{ end }}</td>
+      </tr>
+    {{ end }}
+  </table>
+
+{{ end }}

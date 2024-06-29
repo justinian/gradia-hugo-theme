@@ -1,0 +1,24 @@
+{{ define "main" }}
+
+  {{ partial "header.html" . }}
+  {{ partial "tags.html" . }}
+  <div>
+    {{ .Content }}
+  </div>
+
+  <div>
+    {{ $related := .Site.RegularPages.Related . | first 6 }}
+    {{ with $related }}
+    <h3 style="margin-top: 3em;">Related Entries</h3>
+    <hr class="heading-underline">
+    <ul class="related">
+      {{ range . }}
+      <li><b><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></b>
+        {{- with .Description -}}: {{ . }}{{- end -}}
+      </li>
+      {{ end }}
+    </ul>
+    {{ end }}
+  </div>
+
+{{ end }}
