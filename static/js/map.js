@@ -1,12 +1,4 @@
-const DEV = document.location.search.includes("dev") 
-const MAXZOOM = (DEV && 4) || 3;
-const GROUPS = [
-    {name: "towns", minZoom: 1.5, maxZoom: MAXZOOM, icon: '/images/town_marker.svg'},
-    {name: "cities", minZoom: 0.5, maxZoom: MAXZOOM, icon: '/images/city_marker.svg'},
-    {name: "sites", minZoom: 1.5, maxZoom: MAXZOOM, icon: '/images/chevron_marker.svg'},
-    {name: "states", minZoom: -0.5, maxZoom: 2},
-    {name: "features", minZoom: 0, maxZoom: 2.5},
-];
+import { DEV, MAXZOOM, GROUPS, mapConfig } from './site.js';
 
 function map_resizer(mapdiv) {
     return () => {
@@ -16,10 +8,10 @@ function map_resizer(mapdiv) {
 }
 
 export default async function setupMap(mapdiv, target, zoom, offset) {
-    const xTiles = 10;
-    const yTiles = 10;
-    const mapWidth = 1000;
-    const mapHeight = 1369;
+    const xTiles = mapConfig.xTiles;
+    const yTiles = mapConfig.yTiles;
+    const mapWidth = mapConfig.width;
+    const mapHeight = mapConfig.height;
     const bounds = [[0,0], [mapHeight,mapWidth]];
 
     const resizer = map_resizer(mapdiv);
@@ -34,20 +26,32 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         wheelPxPerZoomLevel: 70,
     });
 
-    let tile_url = '/tiles/{z}_{x}_{y}.webp';
-    if (DEV)
-        tile_url = '/tiles/dev/{z}_{x}_{y}.webp';
+    let tileLayers = {};
+    mapConfig.layers.forEach((name, index) => {
+        if (DEV)
+            name += "_dev";
 
-    L.tileLayer(tile_url, {
-        bounds: bounds,
-        tileSize: L.point(mapWidth/xTiles, mapHeight/yTiles),
-        minZoom: -0.5,
-        maxZoom: MAXZOOM,
-        minNativeZoom: 0,
-        maxNativeZoom: 0,
-        noWrap: true,
-        attribution: "Generated with <a href='https://azgaar.github.io/Fantasy-Map-Generator/'>Azgaar's Fantasy Map Generator</a>"
-    }).addTo(map);
+        let tile_url = `/tiles/${name}/{z}_{x}_{y}.webp`;
+        console.log("Generating map layer", name, "at", tile_url);
+
+        let layer = L.tileLayer(tile_url, {
+            bounds: bounds,
+            tileSize: L.point(mapWidth/xTiles, mapHeight/yTiles),
+            minZoom: -0.5,
+            maxZoom: MAXZOOM,
+            minNativeZoom: 0,
+            maxNativeZoom: 0,
+            noWrap: true,
+            attribution: "Generated with <a href='https://azgaar.github.io/Fantasy-Map-Generator/'>Azgaar's Fantasy Map Generator</a>"
+        });
+        
+        if (!index)
+            layer.addTo(map);
+        tileLayers[name] = layer;
+    });
+
+    if (mapConfig.layers.length > 1)
+        L.control.layers(tileLayers).addTo(map);
 
     map.fitBounds(bounds);
 

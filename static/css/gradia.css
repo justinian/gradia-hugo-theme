@@ -1,14 +1,3 @@
-:root {
-  --bg-dark: #191006;
-  --bg-light-trans: #72461b44;
-
-  --fg-lightest: #e48b36;
-  --fg-light: #72461b;
-  --fg-light-trans: #72461b88;
-  --fg-mid: #4c2f12;
-  --fg-dark: #40270f;
-}
-
 body {
   line-height: 1.5;
   display: flex;
@@ -22,10 +11,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Jaini Purva", system-ui;
+  font-family: var(--title-font);
   margin-bottom: 0;
   a {
-    font-size: 1.5em;
+    font-size: var(--title-font-size);
     text-decoration: none;
   }
 }
@@ -41,10 +30,10 @@ h2 {
 }
 
 nav {
-  font-family: "Jaini Purva", system-ui;
+  font-family: var(--title-font);
   font-weight: bolder;
   font-style: normal;
-  font-size: 2rem;
+  font-size: var(--logo-font-size);
 }
 
 main > div, nav > div, footer > div {
@@ -54,10 +43,9 @@ main > div, nav > div, footer > div {
 
 main {
   flex-grow: 1;
-  background: url('/images/parchment.jpg');
+  background: var(--bg-image);
   background-repeat: repeat;
-  height: 100%;
-
+  background-size: var(--bg-image-height);
   color: var(--fg-dark);
 }
 
@@ -98,7 +86,7 @@ sub {
 }
 
 main p:first-child::first-letter {
-  font-family: "Jaini Purva", system-ui;
+  font-family: var(--title-font);
   font-weight: bolder;
   font-style: normal;
   font-size: 4rem;
@@ -162,8 +150,13 @@ nav ul {
 }
 
 nav ul li {
-  margin-top: -0.25em;
-  font-size: 2rem;
+  margin-top: var(--nav-margin-top);
+  font-size: var(--nav-font-size);
+}
+
+nav ul li.logo {
+  margin-top: var(--logo-margin-top);
+  font-size: var(--logo-font-size);
 }
 
 nav ul li:nth-child(1) {
@@ -322,7 +315,7 @@ footer {
 
 div[class^="map-tooltip-"], div[class*=" map-tooltip-"] {
   color: white;
-  font-family: "Jaini Purva", system-ui !important;
+  font-family: var(--title-font) !important;
   padding-top: 0 !important;
   white-space: pre !important;
   line-height: 1em;

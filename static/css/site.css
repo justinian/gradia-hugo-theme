@@ -1,0 +1,22 @@
+:root {
+  --bg-dark: #191006;
+  --bg-light-trans: #72461b44;
+
+  --fg-lightest: #e48b36;
+  --fg-light: #72461b;
+  --fg-light-trans: #72461b88;
+  --fg-mid: #4c2f12;
+  --fg-dark: #40270f;
+
+  --title-font: "Jaini Purva", system-ui;
+  --title-font-size: 1.5em;
+  --logo-font-size: 2rem;
+  --logo-margin-top: -0.25em;
+  --nav-font-size: 2rem;
+  --nav-margin-top: -0.25em;
+
+  --bg-image: url('/images/parchment.jpg');
+  --bg-image-height: 100%;
+}
+
+
