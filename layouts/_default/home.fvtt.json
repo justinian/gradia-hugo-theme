@@ -53,7 +53,7 @@
         "controls": true,
         "volume": 0.5
       },
-      "src": "modules/{{ $page.Site.Params.fvttName }}{{ $page.RelPermalink }}",
+      "src": "modules/{{ $page.Site.Params.fvttName }}{{ .RelPermalink }}",
       "ownership": {
         "default": -1
       },
