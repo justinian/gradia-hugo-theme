@@ -5,7 +5,7 @@
   {{- with .Process "webp" -}}
     <img
       class='mapimage'
-      src='modules/gradia-org/{{ .RelPermalink }}'
+      src='modules/{{ site.Params.fvttName }}/{{ .RelPermalink }}'
       width='{{ .Width }}'>
   {{- end -}}
 {{- else -}}
