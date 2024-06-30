@@ -329,29 +329,6 @@ div[class^="map-tooltip-"], div[class*=" map-tooltip-"] {
     0 -1px 3px black;
 }
 
-.map-tooltip-states {
-  color: #AAF !important;
-  font-size: 2.5em;
-}
-
-.map-tooltip-cities {
-  font-size: 2em;
-}
-
-.map-tooltip-towns {
-  font-size: 1.5em;
-}
-
-.map-tooltip-sites {
-  color: #FF8 !important;
-  font-size: 1.5em;
-}
-
-.map-tooltip-features {
-  color: #DDD !important;
-  font-size: 2em;
-}
-
 .leaflet-tooltip-top:before, 
 .leaflet-tooltip-bottom:before, 
 .leaflet-tooltip-left:before, 
