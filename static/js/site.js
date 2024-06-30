@@ -1,4 +1,5 @@
 export const DEV = document.location.search.includes("dev");
+export const MINZOOM = -0.5;
 export const MAXZOOM = (DEV && 4) || 3;
 export const GROUPS = [
     {name: "towns", minZoom: 1.5, maxZoom: MAXZOOM, icon: '/images/town_marker.svg'},

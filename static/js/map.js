@@ -1,4 +1,4 @@
-import { DEV, MAXZOOM, GROUPS, mapConfig } from './site.js';
+import { DEV, MINZOOM, MAXZOOM, GROUPS, mapConfig } from './site.js';
 
 function map_resizer(mapdiv) {
     return () => {
@@ -37,7 +37,7 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         let layer = L.tileLayer(tile_url, {
             bounds: bounds,
             tileSize: L.point(mapWidth/xTiles, mapHeight/yTiles),
-            minZoom: -0.5,
+            minZoom: MINZOOM,
             maxZoom: MAXZOOM,
             minNativeZoom: 0,
             maxNativeZoom: 0,
