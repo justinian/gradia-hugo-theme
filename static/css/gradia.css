@@ -37,7 +37,7 @@ nav {
 }
 
 main > div, nav > div, footer > div {
-  max-width: 50rem;
+  max-width: var(--site-width);
   margin: auto;
 }
 
@@ -89,11 +89,9 @@ main p:first-child::first-letter {
   font-family: var(--title-font);
   font-weight: bolder;
   font-style: normal;
-  font-size: 4rem;
+  font-size: var(--drop-cap-size);
+  padding: var(--drop-cap-padding);
   float: left;
-  padding-top: 8px;
-  padding-right: 3px;
-  padding-left: 3px;
   line-height: 0.5;
 }
 
@@ -315,7 +313,7 @@ footer {
 
 div[class^="map-tooltip-"], div[class*=" map-tooltip-"] {
   color: white;
-  font-family: var(--title-font) !important;
+  font-family: var(--map-font) !important;
   padding-top: 0 !important;
   white-space: pre !important;
   line-height: 1em;

@@ -8,15 +8,20 @@
   --fg-mid: #4c2f12;
   --fg-dark: #40270f;
 
+  --map-font: "Jaini Purva", system-ui;
   --title-font: "Jaini Purva", system-ui;
   --title-font-size: 1.5em;
   --logo-font-size: 2rem;
   --logo-margin-top: -0.25em;
   --nav-font-size: 2rem;
   --nav-margin-top: -0.25em;
+  --drop-cap-size: 4rem;
+  --drop-cap-padding: 8px 3px 3px 0;
 
   --bg-image: url('/images/parchment.jpg');
   --bg-image-height: 512px;
+
+  --site-width: 50rem;
 }
 
 
