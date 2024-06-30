@@ -26,11 +26,12 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         wheelPxPerZoomLevel: 70,
     });
 
+    let layerNames = mapConfig.layers;
     let tileLayers = {};
-    mapConfig.layers.forEach((name, index) => {
-        if (DEV)
-            name += "_dev";
+    if (DEV)
+        layerNames = ["dev"].concat(mapConfig.layers);
 
+    layerNames.forEach((name, index) => {
         let tile_url = `/tiles/${name}/{z}_{x}_{y}.webp`;
         console.log("Generating map layer", name, "at", tile_url);
 
