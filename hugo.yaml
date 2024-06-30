@@ -17,6 +17,7 @@ enableGitInfo: true
 
 params:
   github: https://github.com/justinian/gradia.org
+  fvttName: gradia-org
 
 taxonomies:
   tag: tags

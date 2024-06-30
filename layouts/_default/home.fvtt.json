@@ -1,5 +1,5 @@
 {
-  "name": "Gradia",
+  "name": "{{ .Site.Title }}",
   "_id": "__linktitlehash__({{ .LinkTitle }})",
   "pages": [
     {
@@ -31,18 +31,20 @@
         "modifiedTime": {{ .Lastmod.Unix }}
       },
       "_key": "!journal.pages!__linktitlehash__({{ .LinkTitle }}).__linktitlehash__({{ .LinkTitle }}_1)"
-    },
-    {
+    }
+    {{ $page := . }}
+    {{- with resources.GetMatch "/maps/Overview.png" }}
+    ,{
       "sort": 200000,
       "name": "Map",
       "type": "image",
-      "_id": "__linktitlehash__({{ .LinkTitle }}_2)",
+      "_id": "__linktitlehash__({{ $page.LinkTitle }}_2)",
       "title": {
         "show": true,
         "level": 1
       },
       "image": {
-        "caption": "Map of Western Gradia"
+        "caption": "Map of {{ $page.Site.Title }}"
       },
       "text": {
         "format": 1
@@ -51,22 +53,19 @@
         "controls": true,
         "volume": 0.5
       },
-{{- with resources.GetMatch "/maps/Western-Gradia.png" }}
-      "src": "modules/gradia-org{{ .RelPermalink }}",
-{{- else }}
-      "src": null,
-{{- end }}
+      "src": "modules/{{ $page.Site.Params.fvttName }}{{ $page.RelPermalink }}",
       "ownership": {
         "default": -1
       },
       "flags": {},
       "_stats": {
         "coreVersion": "11.315",
-        "createdTime": {{ .PublishDate.Unix }},
-        "modifiedTime": {{ .Lastmod.Unix }}
+        "createdTime": {{ $page.PublishDate.Unix }},
+        "modifiedTime": {{ $page.Lastmod.Unix }}
       },
-      "_key": "!journal.pages!__linktitlehash__({{ .LinkTitle }}).__linktitlehash__({{ .LinkTitle }}_2)"
+      "_key": "!journal.pages!__linktitlehash__({{ $page.LinkTitle }}).__linktitlehash__({{ $page.LinkTitle }}_2)"
     }
+    {{- end }}
   ],
   "folder": null,
   "sort": 0,
