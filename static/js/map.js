@@ -14,6 +14,24 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
     const mapHeight = mapConfig.height;
     const bounds = [[0,0], [mapHeight,mapWidth]];
 
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (!target) {
+        if (urlParams.has('lat') && urlParams.has('lon')) {
+            target = [
+                parseFloat(urlParams.get('lat')),
+                parseFloat(urlParams.get('lon')),
+            ];
+        } else {
+            target = [817,345];
+        }
+
+        if (urlParams.has('z'))
+            zoom = parseFloat(urlParams.get('z'));
+        else
+            zoom = 0;
+    };
+
     const resizer = map_resizer(mapdiv);
     addEventListener('resize', resizer);
     resizer();
@@ -61,11 +79,7 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
     }
 
     map.fitBounds(bounds);
-
-    if (target)
-        map.setView(target, zoom || 0);
-    else
-        map.setView([817,345], zoom || 0);
+    map.setView(target, zoom);
 
     const groups = new Map();
     for (const desc of GROUPS) {
@@ -87,10 +101,14 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
 
     let coordsPopup = L.popup();
     map.on('click', e => {
-        if (e.originalEvent.ctrlKey) {
+        const ll = e.latlng;
+        const z = map.getZoom();
+        if (e.originalEvent.shiftKey) {
+            window.location.replace(`/map/?lat=${ll.lat}&lon=${ll.lng}&z=${z}`);
+        } else if (e.originalEvent.ctrlKey) {
             coordsPopup
                 .setLatLng(e.latlng)
-                .setContent(`Location: [${e.latlng.lat}, ${e.latlng.lng}]`)
+                .setContent(`Location: [${ll.lat}, ${ll.lng}]`)
                 .openOn(map);
         }
     });
