@@ -73,7 +73,7 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
     const layersControl = L.control.layers();
     if (layerNames.length > 1) {
         Object.getOwnPropertyNames(tileLayers).forEach(name => {
-            layersControl.add(tileLayers[name], name);
+            layersControl.addBaseLayer(tileLayers[name], name);
         });
         layersControl.addTo(map);
     }
