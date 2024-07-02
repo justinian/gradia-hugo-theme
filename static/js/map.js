@@ -102,7 +102,11 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
     let coordsPopup = L.popup();
     map.on('click', e => {
         const ll = e.latlng;
-        const z = map.getZoom();
+        const z = map.getZoom().toFixed(1);
+
+        ll.lat = ll.lat.toFixed(1);
+        ll.lng = ll.lng.toFixed(1);
+
         if (e.originalEvent.shiftKey) {
             window.location.replace(`/map/?lat=${ll.lat}&lon=${ll.lng}&z=${z}`);
         } else if (e.originalEvent.ctrlKey) {
