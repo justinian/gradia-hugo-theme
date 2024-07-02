@@ -51,8 +51,14 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         tileLayers[name] = layer;
     });
 
-    if (mapConfig.layers.length > 1)
-        L.control.layers(tileLayers).addTo(map);
+    const layerGroups = {};
+    const layersControl = L.control.layers();
+    if (layerNames.length > 1) {
+        Object.getOwnPropertyNames(tileLayers).forEach(name => {
+            layersControl.add(tileLayers[name], name);
+        });
+        layersControl.addTo(map);
+    }
 
     map.fitBounds(bounds);
 
@@ -159,6 +165,32 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
 
     };
 
+    const add_regions = regions => {
+        let addControl = false;
+        regions.forEach(region => {
+            if (region && region.points) {
+                const poly = L.polygon(region.points, {
+                    color: region.color || "red",
+                }).bindPopup(region.name);
+
+                if (region.group) {
+                    if (!layerGroups[region.group]) {
+                        const group = L.layerGroup();
+                        layersControl.addOverlay(group, region.group);
+                        layerGroups[region.group] = group;
+                        addControl = true;
+                    }
+                    layerGroups[region.group].addLayer(poly);
+                } else {
+                    map.addLayer(poly);
+                }
+            }
+        });
+
+        if (addControl && !map.hasLayer(layersControl))
+            layersControl.addTo(map);
+    };
+
     // Real link markers
     fetch('/data/mapmarkers.json')
         .then( resp => resp.json() )
@@ -168,4 +200,10 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
     fetch('/data/mapmarkers_extra.json')
         .then( resp => resp.json() )
         .then( markers => add_markers(markers, false) );
+
+    // Extra defined markers
+    fetch('/data/regions.json')
+        .then( resp => resp.json() )
+        .then( regions => add_regions(regions) );
+
 }
