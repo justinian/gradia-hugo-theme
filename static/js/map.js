@@ -50,7 +50,7 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         layerNames = ["dev"].concat(mapConfig.layers);
 
     layerNames.forEach((name, index) => {
-        let tile_url = `/tiles/${name}/{z}_{x}_{y}.webp`;
+        let tile_url = `/tiles/${name}/{z}_{x}_{y}.avif`;
         console.log("Generating map layer", name, "at", tile_url);
 
         let layer = L.tileLayer(tile_url, {
