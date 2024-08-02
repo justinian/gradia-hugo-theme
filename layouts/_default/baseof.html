@@ -20,6 +20,14 @@
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="icon" href="{{ relLangURL "favicon.ico" }}" type="image/x-icon">
 
+  <script>
+    window.goatcounter = {
+        path: function(p) { return {{ site.Title }} + p }
+    }
+  </script>
+  <script data-goatcounter="https://stats.gradia.org/count"
+        async src="//stats.gradia.org/count.js"></script>
+
   {{ block "links" . }}{{ end }}
 
   {{ partial "meta.html" . }}
