@@ -12,7 +12,10 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
     const yTiles = mapConfig.yTiles;
     const mapWidth = mapConfig.width;
     const mapHeight = mapConfig.height;
-    const bounds = [[0,0], [mapHeight,mapWidth]];
+    const paddingAmount = 0.1;
+    const paddingX = mapConfig.width * (paddingAmount / 2);
+    const paddingY = mapConfig.height * (paddingAmount / 2);
+    const bounds = [[-paddingX,-paddingY], [mapHeight*(1+paddingAmount),mapWidth*(1+paddingAmount)]];
 
     const urlParams = new URLSearchParams(window.location.search);
 
