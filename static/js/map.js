@@ -1,4 +1,4 @@
-import { DEV, MINZOOM, MAXZOOM, GROUPS, mapConfig } from './site.js';
+import { DEV, MINZOOM, MAXZOOM, GROUPS, mapStyle } from './site.js';
 
 function map_resizer(mapdiv) {
     return () => {
@@ -7,15 +7,16 @@ function map_resizer(mapdiv) {
     };
 }
 
-export default async function setupMap(mapdiv, target, zoom, offset) {
-    const xTiles = mapConfig.xTiles;
-    const yTiles = mapConfig.yTiles;
-    const mapWidth = mapConfig.width;
-    const mapHeight = mapConfig.height;
-    const paddingAmount = 0.1;
-    const paddingX = mapConfig.width * (paddingAmount / 2);
-    const paddingY = mapConfig.height * (paddingAmount / 2);
-    const bounds = [[-paddingX,-paddingY], [mapHeight*(1+paddingAmount),mapWidth*(1+paddingAmount)]];
+
+async function setupMapWithData(mapdiv, target, zoom, offset, mapData) {
+    const xTiles = mapData.xTiles;
+    const yTiles = mapData.yTiles;
+    const mapWidth = mapData.width;
+    const mapHeight = mapData.height;
+    const padding = 0;
+
+    let bounds = mapStyle.bounds ? mapStyle.bounds :
+        [[-padding,-padding], [mapHeight+padding,mapWidth+padding]];
 
     const urlParams = new URLSearchParams(window.location.search);
 
@@ -47,13 +48,13 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         wheelPxPerZoomLevel: 70,
     });
 
-    let layerNames = mapConfig.layers;
+    let layerNames = mapData.layers;
     let tileLayers = {};
     if (DEV)
-        layerNames = ["dev"].concat(mapConfig.layers);
+        layerNames = ["dev"].concat(mapData.layers);
 
     layerNames.forEach((name, index) => {
-        let tile_url = `/tiles/${name}/{z}_{x}_{y}.avif`;
+        let tile_url = `/map/${name}/{z}_{x}_{y}.avif?id=${mapData.mapId}`;
         console.log("Generating map layer", name, "at", tile_url);
 
         let layer = L.tileLayer(tile_url, {
@@ -78,8 +79,8 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         Object.getOwnPropertyNames(tileLayers).forEach(name => {
             layersControl.addBaseLayer(tileLayers[name], name);
         });
-        layersControl.addTo(map);
     }
+    layersControl.addTo(map);
 
     map.fitBounds(bounds);
     map.setView(target, zoom);
@@ -138,6 +139,9 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         checkMarkers(map);
     });
 
+    let borderLines = L.polyline(mapData.borders, mapStyle.borders).addTo(map);
+    layersControl.addOverlay(borderLines, "borders");
+
     const add_markers = (markers, link) => {
         markers.forEach(marker => {
             if (!marker) return;
@@ -187,7 +191,6 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
 
         });
         checkMarkers(map);
-
     };
 
     const add_regions = regions => {
@@ -231,4 +234,10 @@ export default async function setupMap(mapdiv, target, zoom, offset) {
         .then( resp => resp.json() )
         .then( regions => add_regions(regions) );
 
+}
+
+export default async function setupMap(mapdiv, target, zoom, offset) {
+    fetch('/map/map_data.json')
+        .then( resp => resp.json() )
+        .then( mapData => setupMapWithData(mapdiv, target, zoom, offset, mapData) );
 }

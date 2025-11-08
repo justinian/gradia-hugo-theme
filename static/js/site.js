@@ -9,10 +9,13 @@ export const GROUPS = [
     {name: "features", minZoom: 0, maxZoom: 2.5},
 ];
 
-export const mapConfig = {
-    layers: [""],
-    xTiles: 10,
-    yTiles: 10,
-    width: 1000,
-    height: 1369,
+export const mapStyle = {
+    bounds: [[0,0],[1350,950]],
+    borders: {
+        smoothFactor: 3.0,
+        color: "#6f2020",
+        dashArray: "1 5 3 5",
+        weight: 2,
+        noClip: false,
+    },
 };
